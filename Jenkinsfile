@@ -27,7 +27,7 @@ pipeline {
        when {
          allOf {
            expression { env.TAG_NAME != env.GIT_BRANCH }
-            branch 'main'
+           branch 'main'
          }
        }
        steps {
