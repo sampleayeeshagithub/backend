@@ -14,7 +14,6 @@ pipeline {
      stage('code quality'){
        when {
          allOf {
-           branch 'main'
            expression { env.TAG_NAME != env.GIT_BRANCH }
          }
        }
@@ -26,7 +25,10 @@ pipeline {
 
      stage('Unit Tests'){
        when {
-         branch 'main'
+         allOf {
+           expression { env.TAG_NAME != env.GIT_BRANCH }
+            branch 'main'
+         }
        }
        steps {
          echo 'CI'
