@@ -14,7 +14,7 @@ pipeline {
        when {
          allOf {
            branch 'main'
-           expression { env.TAG_NAME != env.BRANCH_NAME }
+           expression { env.TAG_NAME != env.GIT_BRANCH }
          }
        }
        steps {
@@ -25,10 +25,9 @@ pipeline {
 
      stage('Unit Tests'){
        when {
-         allOf {
-           branch 'main'
-         }
+         branch 'main'
        }
+     }
        steps {
          echo 'CI'
        }
