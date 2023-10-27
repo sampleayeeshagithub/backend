@@ -39,12 +39,15 @@ pipeline {
        when {
          expression { env.TAG_NAME ==~ ".*" }
        }
+//       steps {
+//          sh 'zip -r backend-${TAG_NAME}.zip node_modules schema DbConfig.js index.js package.json TransactionService.js'
+//          sh 'curl -sSf -u "admin:Admin123" -X PUT -T backend-${TAG_NAME}.zip "http://artifactory.ayeeshadevops75.online:8081/artifactory/backend/backend-${TAG_NAME}.zip"'
+//       }
        steps {
-          sh 'zip -r backend-${TAG_NAME}.zip node_modules schema DbConfig.js index.js package.json TransactionService.js'
-          sh 'curl -sSf -u "admin:Admin123" -X PUT -T backend-${TAG_NAME}.zip "http://artifactory.ayeeshadevops75.online:8081/artifactory/backend/backend-${TAG_NAME}.zip"'
+         sh 'docker build -t 299627189740.dkr.ecr.us-east-1.amazonaws.com/backend:${TAG_NAME} .'
+         sh 'aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 299627189740.dkr.ecr.us-east-1.amazonaws.com'
+         sh 'docker push 299627189740.dkr.ecr.us-east-1.amazonaws.com/backend:${TAG_NAME}'
        }
      }
-
    }
 }
-///
